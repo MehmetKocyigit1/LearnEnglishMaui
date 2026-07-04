@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
              x:Class="IngilizceProjeMAUI.Views.AiChatPage"
              Title="Başöğretmen Chat"
-             Background="{AppThemeBinding Light={StaticResource LightBgGradient}, Dark={StaticResource DarkBgGradient}}">
+             Background="{AppThemeBinding Light=White, Dark={StaticResource DarkBgGradient}}">
 
     <ContentPage.Resources>
         <ResourceDictionary>

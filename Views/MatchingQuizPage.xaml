@@ -5,7 +5,7 @@
              xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
              x:Class="IngilizceProjeMAUI.Views.MatchingQuizPage"
              Title="Kelime Yazma Quizi"
-             Background="{AppThemeBinding Light={StaticResource LightBgGradient}, Dark={StaticResource DarkBgGradient}}">
+             Background="{AppThemeBinding Light=White, Dark={StaticResource DarkBgGradient}}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -66,19 +66,14 @@
                                            TextColor="{AppThemeBinding Light=Black, Dark=White}" Margin="10,0" VerticalOptions="Center"/>
                                 </Border>
 
-                                <!-- Correct Answer Help (visible only when answered incorrectly) -->
+                                <!-- Correct Answer Help (visible only when checked and incorrect) -->
                                 <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                        Text="{Binding CorrectMeaning, StringFormat='Doğrusu: {0}'}"
-                                       TextColor="#10B981" FontSize="13" FontAttributes="Bold" Margin="5,2,0,0">
+                                       TextColor="#10B981" FontSize="13" FontAttributes="Bold" Margin="5,2,0,0"
+                                       IsVisible="False">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding IsCorrectMatch}" Value="False">
                                             <Setter Property="IsVisible" Value="True"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsCorrectMatch}" Value="True">
-                                            <Setter Property="IsVisible" Value="False"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsCorrectMatch}" Value="{x:Null}">
-                                            <Setter Property="IsVisible" Value="False"/>
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>

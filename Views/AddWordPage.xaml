@@ -5,7 +5,7 @@
              xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
              x:Class="IngilizceProjeMAUI.Views.AddWordPage"
              Title="{Binding IsEditMode, Converter={StaticResource BoolToValueConverter}, ConverterParameter='Kelimeyi Düzenle|Yeni Kelime Ekle'}"
-             Background="{AppThemeBinding Light={StaticResource LightBgGradient}, Dark={StaticResource DarkBgGradient}}">
+             Background="{AppThemeBinding Light=White, Dark={StaticResource DarkBgGradient}}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
