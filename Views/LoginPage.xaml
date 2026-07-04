@@ -10,10 +10,10 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:BoolToValueConverter x:Key="KeyValueConverter" />
-            <Color x:Key="PrimaryColor">#6366F1</Color>
-            <Color x:Key="SecondaryColor">#A855F7</Color>
+            <Color x:Key="PrimaryColor">#F8FAFC</Color>
+            <Color x:Key="SecondaryColor">gray</Color>
             <Color x:Key="CardColor">#CC1E293B</Color>
-            <Color x:Key="TextColor">#F8FAFC</Color>
+            <Color x:Key="TextColor">black</Color>
             <Color x:Key="PlaceholderColor">#94A3B8</Color>
             <Color x:Key="BorderColor">#312E81</Color>
         </ResourceDictionary>

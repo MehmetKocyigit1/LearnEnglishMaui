@@ -7,9 +7,7 @@
     xmlns:local="clr-namespace:IngilizceProjeMAUI"
     xmlns:views="clr-namespace:IngilizceProjeMAUI.Views"
     Shell.FlyoutBehavior="Disabled"
-    Title="Antigravity English"
-    BackgroundColor="#0F172A"
-    ForegroundColor="White">
+    Title="Antigravity English">
 
     <!-- Login Route -->
     <ShellContent
