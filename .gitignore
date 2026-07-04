@@ -1,0 +1,35 @@
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Release]/
+[Re]leasePublic/
+x64/
+x86/
+build/
+bld/
+Bin/
+bin/
+Obj/
+obj/
+AppPackages/
+BundleArtifacts/
+PackageSyndication/
+
+# Visual Studio cache directory
+.vs/
+
+# Diagnostic reports
+*.dlr
+*.dmr
+
+# OS generated files
+.DS_Store
+Thumbs.db

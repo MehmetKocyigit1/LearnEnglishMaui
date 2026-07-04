@@ -1,0 +1,107 @@
+<!-- IngilizceProje/MAUIClient/Views/MatchingQuizPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:IngilizceProjeMAUI.ViewModels"
+             xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
+             x:Class="IngilizceProjeMAUI.Views.MatchingQuizPage"
+             Title="Kelime Yazma Quizi"
+             Background="{AppThemeBinding Light={StaticResource LightBgGradient}, Dark={StaticResource DarkBgGradient}}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToValueConverter x:Key="BoolToValueConverter" />
+            <Color x:Key="CardColor">#CC1E293B</Color>
+            <Color x:Key="BorderColor">#312E81</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*, Auto" Padding="20" RowSpacing="15">
+        
+        <!-- Matching Layout -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="15" MaximumWidthRequest="500" HorizontalOptions="Fill" BindableLayout.ItemsSource="{Binding QuizItems}">
+                
+                <!-- Info Message -->
+                <Label Text="{Binding InfoMessage}" TextColor="#EF4444" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"
+                       IsVisible="{Binding InfoMessage, Converter={StaticResource BoolToValueConverter}, ConverterParameter='True|False'}"/>
+
+                <!-- Scoring Banner -->
+                <Border IsVisible="{Binding HasChecked}" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource CardColor}}" Stroke="#10B981" StrokeThickness="1.5" StrokeShape="RoundRectangle 12" Padding="14" Margin="0,0,0,10">
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="{AppThemeBinding Light=0.08, Dark=0.3}"/>
+                    </Border.Shadow>
+                    <Label Text="{Binding ScoreText}" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </Border>
+
+                <!-- Matching Items List -->
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:MatchingItem">
+                        <!-- Border dynamically colors border based on match correctness -->
+                        <Border Margin="2,5,2,5" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource CardColor}}" StrokeThickness="2" StrokeShape="RoundRectangle 16" Padding="12">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Offset="0,4" Radius="6" Opacity="{AppThemeBinding Light=0.08, Dark=0.25}"/>
+                            </Border.Shadow>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsCorrectMatch}" Value="True">
+                                    <Setter Property="Stroke" Value="#10B981" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsCorrectMatch}" Value="False">
+                                    <Setter Property="Stroke" Value="#EF4444" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsCorrectMatch}" Value="{x:Null}">
+                                    <Setter Property="Stroke" Value="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            
+                            <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *" ColumnSpacing="15" RowSpacing="8" VerticalOptions="Center">
+                                <!-- English word display -->
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding EnglishWord}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                <!-- Turkish meaning entry -->
+                                <Border Grid.Row="0" Grid.Column="1" Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}" HeightRequest="45">
+                                    <Entry Text="{Binding SelectedMeaning}"
+                                           Placeholder="Anlamını yazın..."
+                                           PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
+                                           IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type vm:MatchingQuizViewModel}}, Path=HasChecked, Converter={StaticResource BoolToValueConverter}, ConverterParameter='False|True'}"
+                                           TextColor="{AppThemeBinding Light=Black, Dark=White}" Margin="10,0" VerticalOptions="Center"/>
+                                </Border>
+
+                                <!-- Correct Answer Help (visible only when answered incorrectly) -->
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding CorrectMeaning, StringFormat='Doğrusu: {0}'}"
+                                       TextColor="#10B981" FontSize="13" FontAttributes="Bold" Margin="5,2,0,0">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsCorrectMatch}" Value="False">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsCorrectMatch}" Value="True">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsCorrectMatch}" Value="{x:Null}">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Quiz Action Buttons -->
+        <VerticalStackLayout Grid.Row="1" Spacing="12">
+            <!-- Submit button, disabled after check -->
+            <Button Text="Cevapları Kontrol Et 🏁" Command="{Binding CheckAnswersCommand}" 
+                    IsVisible="{Binding HasChecked, Converter={StaticResource BoolToValueConverter}, ConverterParameter='False|True'}"
+                    Background="{StaticResource PrimaryGradient}" TextColor="White" FontAttributes="Bold" HeightRequest="48" CornerRadius="10"/>
+
+            <!-- Next Quiz button, visible after check or if quiz failed to load -->
+            <Button Text="Sıradaki Quiz 🔄" Command="{Binding LoadQuizCommand}" 
+                    IsVisible="{Binding CanLoadQuiz}"
+                    Background="{StaticResource SuccessGradient}" TextColor="White" FontAttributes="Bold" HeightRequest="48" CornerRadius="10"/>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="#6366F1" HorizontalOptions="Center" HeightRequest="30"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

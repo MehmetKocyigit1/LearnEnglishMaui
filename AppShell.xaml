@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- IngilizceProje/MAUIClient/AppShell.xaml -->
+<Shell
+    x:Class="IngilizceProjeMAUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:IngilizceProjeMAUI"
+    xmlns:views="clr-namespace:IngilizceProjeMAUI.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="Antigravity English"
+    BackgroundColor="#0F172A"
+    ForegroundColor="White">
+
+    <!-- Login Route -->
+    <ShellContent
+        Route="LoginPage"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        FlyoutItemIsVisible="False" />
+
+    <!-- Main App TabBar -->
+    <TabBar Route="MainPage" x:Name="MainAppTabBar">
+        <Tab Title="Kelimeler">
+            <ShellContent ContentTemplate="{DataTemplate views:WordListPage}" />
+        </Tab>
+        <Tab Title="Başöğretmen">
+            <ShellContent ContentTemplate="{DataTemplate views:AiChatPage}" />
+        </Tab>
+        <Tab Title="Tekrar">
+            <ShellContent ContentTemplate="{DataTemplate views:FlashcardPage}" />
+        </Tab>
+        <Tab Title="Test">
+            <ShellContent ContentTemplate="{DataTemplate views:TestPage}" />
+        </Tab>
+        <Tab Title="Quiz">
+            <ShellContent ContentTemplate="{DataTemplate views:MatchingQuizPage}" />
+        </Tab>
+        <Tab Title="İstatistik">
+            <ShellContent ContentTemplate="{DataTemplate views:StatsAndGoalPage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>

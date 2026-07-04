@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- IngilizceProje/MAUIClient/Views/AiChatPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:IngilizceProjeMAUI.ViewModels"
+             xmlns:models="clr-namespace:IngilizceProjeMAUI.Models"
+             xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
+             x:Class="IngilizceProjeMAUI.Views.AiChatPage"
+             Title="Başöğretmen Chat"
+             Background="{AppThemeBinding Light={StaticResource LightBgGradient}, Dark={StaticResource DarkBgGradient}}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToValueConverter x:Key="BoolToValueConverter" />
+            <Color x:Key="BorderColor">#312E81</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="0" RowSpacing="0">
+
+        <!-- HEADER AREA (Modern Header with Status Indicator) -->
+        <Border Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#CC1E293B}" Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeThickness="1" StrokeShape="RoundRectangle 0" Padding="16,12">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="{AppThemeBinding Light=0.08, Dark=0.3}"/>
+            </Border.Shadow>
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                
+                <Border Grid.Column="0" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" BackgroundColor="#6366F1" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="👨‍🏫" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+
+                <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0" VerticalOptions="Center">
+                    <Label Text="AI Başöğretmen" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}"/>
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <Ellipse WidthRequest="8" HeightRequest="8" Fill="#10B981" VerticalOptions="Center"/>
+                        <Label Text="{Binding IsAiTyping, Converter={StaticResource BoolToValueConverter}, ConverterParameter='Yazıyor...|Çevrimiçi'}" 
+                               FontSize="12" TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <Button Grid.Column="2" Text="Temizle" Command="{Binding ClearChatCommand}" 
+                        IsVisible="False" BackgroundColor="Transparent" TextColor="#94A3B8" FontSize="12" HeightRequest="36"/>
+            </Grid>
+        </Border>
+
+        <!-- CHAT BUBBLES AREA (CollectionView) -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding Messages}" 
+                        x:Name="ChatCollectionView"
+                        SelectionMode="None"
+                        Margin="16,10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ChatMessage">
+                    <Grid Padding="0,4" HorizontalOptions="Fill">
+                        <!-- Message Bubble -->
+                        <Border StrokeThickness="1" Padding="14,10" MaximumWidthRequest="280">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Offset="0,2" Radius="4" Opacity="{AppThemeBinding Light=0.05, Dark=0.2}"/>
+                            </Border.Shadow>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <!-- Defaults for AI Message -->
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#EEF2F6, Dark=#1E293B}"/>
+                                    <Setter Property="Stroke" Value="{AppThemeBinding Light=#CBD5E1, Dark=#312E81}"/>
+                                    <Setter Property="StrokeShape" Value="RoundRectangle 16,16,16,2"/>
+                                    <Setter Property="HorizontalOptions" Value="Start"/>
+                                    <Style.Triggers>
+                                        <!-- Triggers for User Message -->
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsUserMessage}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#6366F1"/>
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                            <Setter Property="StrokeShape" Value="RoundRectangle 16,16,2,16"/>
+                                            <Setter Property="HorizontalOptions" Value="End"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Text}" 
+                                       TextColor="{Binding IsUserMessage, Converter={StaticResource BoolToValueConverter}, ConverterParameter='White|#0F172A'}"
+                                       FontSize="14" 
+                                       LineBreakMode="WordWrap">
+                                    <Label.Triggers>
+                                        <!-- Use simple bindings or triggers if custom colors are needed in dual theme -->
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUserMessage}" Value="False">
+                                            <Setter Property="TextColor" Value="{AppThemeBinding Light=#0F172A, Dark=White}"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUserMessage}" Value="True">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label Text="{Binding Timestamp, StringFormat='{0:HH:mm}'}" 
+                                       FontSize="9" 
+                                       TextColor="{Binding IsUserMessage, Converter={StaticResource BoolToValueConverter}, ConverterParameter='#E2E8F0|#64748B'}" 
+                                       HorizontalOptions="End">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUserMessage}" Value="False">
+                                            <Setter Property="TextColor" Value="{AppThemeBinding Light=#64748B, Dark=#CBD5E1}"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUserMessage}" Value="True">
+                                            <Setter Property="TextColor" Value="#E2E8F0"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- TYPING INDICATOR & BOTTOM INPUT AREA -->
+        <VerticalStackLayout Grid.Row="2" BackgroundColor="{AppThemeBinding Light=White, Dark=#CC1E293B}" Padding="16,10" Spacing="8">
+            <VerticalStackLayout.GestureRecognizers>
+                <!-- Empty for layout isolation -->
+            </VerticalStackLayout.GestureRecognizers>
+            
+            <!-- AI Typing Indicator -->
+            <HorizontalStackLayout Spacing="8" IsVisible="{Binding IsAiTyping}" Padding="4,0,0,0">
+                <ActivityIndicator IsRunning="{Binding IsAiTyping}" Color="#6366F1" WidthRequest="16" HeightRequest="16"/>
+                <Label Text="Başöğretmen düşünüyor..." FontSize="13" TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}" FontAttributes="Italic"/>
+            </HorizontalStackLayout>
+
+            <!-- Input Entry and Send Button -->
+            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
+                <!-- Text input entry -->
+                <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}" StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" Padding="12,2">
+                    <Entry Placeholder="Başöğretmen'e mesaj yazın..." 
+                           Text="{Binding UserMessageText}" 
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                           PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
+                           FontSize="14"
+                           HeightRequest="40"
+                           Keyboard="Chat"
+                           ReturnCommand="{Binding SendMessageCommand}"/>
+                </Border>
+
+                <!-- Send button -->
+                <Border Grid.Column="1" WidthRequest="42" HeightRequest="42" StrokeShape="RoundRectangle 21" Background="{StaticResource PrimaryGradient}" StrokeThickness="0" VerticalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SendMessageCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="➔" TextColor="White" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
