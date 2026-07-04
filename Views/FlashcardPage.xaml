@@ -5,7 +5,7 @@
              xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
              x:Class="IngilizceProjeMAUI.Views.FlashcardPage"
              Title="Kelime Kartları"
-             Background="{AppThemeBinding Light=White, Dark={StaticResource DarkBgGradient}}">
+             Background="{AppThemeBinding Light={StaticResource LightPageBg}, Dark={StaticResource DarkBgGradient}}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -22,18 +22,18 @@
         <Grid Grid.Row="0" VerticalOptions="CenterAndExpand" HorizontalOptions="Fill">
             <!-- Empty state -->
             <VerticalStackLayout Spacing="15" IsVisible="{Binding HasWord, Converter={StaticResource BoolToValueConverter}, ConverterParameter='False|True'}" HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="Tekrar Edilecek Kelime" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" HorizontalOptions="Center"/>
-                <Label Text="{Binding EmptyMessage}" FontSize="14" TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="Tekrar Edilecek Kelime" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" HorizontalOptions="Center"/>
+                <Label Text="{Binding EmptyMessage}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#94A3B8}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                 <Button Text="Yeniden Dene / Güncelle 🔄" Command="{Binding LoadNextWordCommand}"
                         Background="{StaticResource PrimaryGradient}" TextColor="White" HeightRequest="45" CornerRadius="10" HorizontalOptions="Center" Margin="0,10,0,0"/>
             </VerticalStackLayout>
 
             <!-- Active Card -->
-            <Border x:Name="CardBorder" IsVisible="{Binding HasWord}" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource CardColor}}" 
-                    Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeThickness="1.5" StrokeShape="RoundRectangle 24" 
+            <Border x:Name="CardBorder" IsVisible="{Binding HasWord}" BackgroundColor="{AppThemeBinding Light={StaticResource LightCardBg}, Dark={StaticResource CardColor}}" 
+                    Stroke="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" StrokeThickness="1.5" StrokeShape="RoundRectangle 24" 
                     Padding="24" HeightRequest="350" MaximumWidthRequest="450" HorizontalOptions="Fill" VerticalOptions="Fill">
                 <Border.Shadow>
-                    <Shadow Brush="#000000" Offset="0,10" Radius="20" Opacity="{AppThemeBinding Light=0.08, Dark=0.4}" />
+                    <Shadow Brush="#000000" Offset="0,10" Radius="20" Opacity="{AppThemeBinding Light=0.06, Dark=0.4}" />
                 </Border.Shadow>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnCardTapped"/>
@@ -44,30 +44,30 @@
                     <VerticalStackLayout Spacing="20" VerticalOptions="Center" HorizontalOptions="Center" 
                                          IsVisible="{Binding IsFlipped, Converter={StaticResource BoolToValueConverter}, ConverterParameter='False|True'}">
                         <Label Text="İNGİLİZCE" FontSize="12" FontAttributes="Bold" TextColor="#6366F1" HorizontalOptions="Center" CharacterSpacing="2"/>
-                        <Label Text="{Binding CurrentWord.EnglishWord}" FontSize="36" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-                        <Label Text="Kartı çevirmek için buraya dokunun 👆" FontSize="13" TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" HorizontalOptions="Center" Margin="0,30,0,0"/>
+                        <Label Text="{Binding CurrentWord.EnglishWord}" FontSize="36" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                        <Label Text="Kartı çevirmek için buraya dokunun 👆" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#94A3B8}" HorizontalOptions="Center" Margin="0,30,0,0"/>
                     </VerticalStackLayout>
 
                     <!-- Back Layout -->
                     <VerticalStackLayout Spacing="12" VerticalOptions="Center" 
                                          IsVisible="{Binding IsFlipped}">
                         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                            <Label Text="{Binding CurrentWord.EnglishWord}" FontSize="24" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}"/>
-                            <Border Background="{AppThemeBinding Light=#EEF2F6, Dark=#334155}" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="6,2" VerticalOptions="Center">
-                                <Label Text="{Binding CurrentWord.WordType}" FontSize="10" TextColor="{AppThemeBinding Light=#4F46E5, Dark=#94A3B8}" FontAttributes="Bold"/>
+                            <Label Text="{Binding CurrentWord.EnglishWord}" FontSize="24" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}"/>
+                            <Border Background="{AppThemeBinding Light={StaticResource LightInputBg}, Dark=#334155}" StrokeShape="RoundRectangle 6" StrokeThickness="0" Padding="6,2" VerticalOptions="Center">
+                                <Label Text="{Binding CurrentWord.WordType}" FontSize="10" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=#94A3B8}" FontAttributes="Bold"/>
                             </Border>
                         </HorizontalStackLayout>
                         
-                        <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" Margin="0,5,0,5"/>
+                        <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" Margin="0,5,0,5"/>
 
-                        <Label Text="TÜRKÇE ANLAMI" FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}" HorizontalOptions="Center"/>
+                        <Label Text="TÜRKÇE ANLAMI" FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#94A3B8}" HorizontalOptions="Center"/>
                         <Label Text="{Binding CurrentWord.TurkishMeaning}" FontSize="22" FontAttributes="Bold" TextColor="#10B981" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
-                        <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" Margin="0,5,0,5"/>
+                        <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" Margin="0,5,0,5"/>
 
-                        <Label Text="ÖRNEK CÜMLE" FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}"/>
-                        <Label Text="{Binding CurrentWord.ExampleSentence}" FontSize="14" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" FontAttributes="Italic"/>
-                        <Label Text="{Binding CurrentWord.ExampleSentenceTranslation}" FontSize="13" TextColor="{AppThemeBinding Light=#334155, Dark=#CBD5E1}"/>
+                        <Label Text="ÖRNEK CÜMLE" FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#94A3B8}"/>
+                        <Label Text="{Binding CurrentWord.ExampleSentence}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" FontAttributes="Italic"/>
+                        <Label Text="{Binding CurrentWord.ExampleSentenceTranslation}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#CBD5E1}"/>
                     </VerticalStackLayout>
                 </Grid>
             </Border>

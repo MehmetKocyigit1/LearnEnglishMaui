@@ -57,6 +57,11 @@ namespace IngilizceProjeMAUI.ViewModels
         public Color OptionCColor => GetOptionColor(OptionC);
         public Color OptionDColor => GetOptionColor(OptionD);
 
+        public Color OptionATextColor => GetOptionTextColor(OptionA);
+        public Color OptionBTextColor => GetOptionTextColor(OptionB);
+        public Color OptionCTextColor => GetOptionTextColor(OptionC);
+        public Color OptionDTextColor => GetOptionTextColor(OptionD);
+
         public TestViewModel(ApiService apiService)
         {
             _apiService = apiService;
@@ -91,12 +96,14 @@ namespace IngilizceProjeMAUI.ViewModels
                 }
                 else
                 {
-                    InfoMessage = "Test yüklenemedi. En az 4 kelimenizin bulunması gerekmektedir.";
+                    InfoMessage = "Test üretilemedi. Lütfen yeterli kelimeniz olduğundan emin olun.";
+                    HasTest = false;
                 }
             }
             catch (Exception ex)
             {
-                InfoMessage = ex.Message;
+                InfoMessage = $"Hata: {ex.Message}";
+                HasTest = false;
             }
             finally
             {
@@ -158,8 +165,11 @@ namespace IngilizceProjeMAUI.ViewModels
 
         private Color GetOptionColor(string option)
         {
-            if (string.IsNullOrEmpty(option)) return Color.FromArgb("#1E293B");
-            if (!IsAnswered) return Color.FromArgb("#1E293B");
+            var isLight = Application.Current?.RequestedTheme == AppTheme.Light;
+            var defaultColor = isLight ? Color.FromArgb("#F1F5F9") : Color.FromArgb("#1E293B");
+
+            if (string.IsNullOrEmpty(option)) return defaultColor;
+            if (!IsAnswered) return defaultColor;
             
             if (option.Trim().ToLower() == CorrectOption.Trim().ToLower()) 
                 return Color.FromArgb("#10B981"); // Premium Green
@@ -167,7 +177,25 @@ namespace IngilizceProjeMAUI.ViewModels
             if (option.Trim().ToLower() == SelectedOption.Trim().ToLower()) 
                 return Color.FromArgb("#EF4444"); // Premium Red
                 
-            return Color.FromArgb("#1E293B"); // CardColor Default
+            return defaultColor;
+        }
+
+        private Color GetOptionTextColor(string option)
+        {
+            var isLight = Application.Current?.RequestedTheme == AppTheme.Light;
+            
+            if (!IsAnswered)
+            {
+                return isLight ? Color.FromArgb("#0F172A") : Colors.White;
+            }
+
+            if (option.Trim().ToLower() == CorrectOption.Trim().ToLower() || 
+                option.Trim().ToLower() == SelectedOption.Trim().ToLower())
+            {
+                return Colors.White;
+            }
+
+            return isLight ? Color.FromArgb("#0F172A") : Colors.White;
         }
 
         private void RefreshOptionColors()
@@ -176,6 +204,10 @@ namespace IngilizceProjeMAUI.ViewModels
             OnPropertyChanged(nameof(OptionBColor));
             OnPropertyChanged(nameof(OptionCColor));
             OnPropertyChanged(nameof(OptionDColor));
+            OnPropertyChanged(nameof(OptionATextColor));
+            OnPropertyChanged(nameof(OptionBTextColor));
+            OnPropertyChanged(nameof(OptionCTextColor));
+            OnPropertyChanged(nameof(OptionDTextColor));
         }
     }
 }

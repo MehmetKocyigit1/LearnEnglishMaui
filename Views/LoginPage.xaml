@@ -5,7 +5,7 @@
              xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
              x:Class="IngilizceProjeMAUI.Views.LoginPage"
              Shell.NavBarIsVisible="False"
-             Background="{AppThemeBinding Light=White, Dark={StaticResource DarkBgGradient}}">
+             Background="{AppThemeBinding Light={StaticResource LightPageBg}, Dark={StaticResource DarkBgGradient}}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -28,20 +28,20 @@
                     <Label Text="A" FontSize="40" TextColor="White" FontAttributes="Bold"
                            HorizontalOptions="Center" VerticalOptions="Center"/>
                 </Border>
-                <Label Text="Antigravity English" FontSize="28" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" HorizontalOptions="Center"/>
-                <Label Text="Kelime Öğren ve Tekrar Et" FontSize="14" TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" HorizontalOptions="Center"/>
+                <Label Text="Antigravity English" FontSize="28" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" HorizontalOptions="Center"/>
+                <Label Text="Kelime Öğren ve Tekrar Et" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#94A3B8}" HorizontalOptions="Center"/>
             </VerticalStackLayout>
 
             <!-- Card Body Area -->
-            <Border Grid.Row="1" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource CardColor}}" StrokeShape="RoundRectangle 20"
-                    Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeThickness="1.5" Padding="24" MaximumWidthRequest="450"
+            <Border Grid.Row="1" BackgroundColor="{AppThemeBinding Light={StaticResource LightCardBg}, Dark={StaticResource CardColor}}" StrokeShape="RoundRectangle 20"
+                    Stroke="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" StrokeThickness="1.5" Padding="24" MaximumWidthRequest="450"
                     VerticalOptions="Center" HorizontalOptions="Fill">
                 <Border.Shadow>
-                    <Shadow Brush="#000000" Offset="0,10" Radius="20" Opacity="{AppThemeBinding Light=0.1, Dark=0.4}" />
+                    <Shadow Brush="#000000" Offset="0,10" Radius="20" Opacity="{AppThemeBinding Light=0.08, Dark=0.4}" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="18">
                     <Label Text="{Binding IsRegisterMode, Converter={StaticResource KeyValueConverter}, ConverterParameter='Kayıt Ol|Giriş Yap'}" 
-                           FontSize="22" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}"/>
+                           FontSize="22" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}"/>
 
                     <!-- Error Message -->
                     <Label Text="{Binding ErrorMessage}" TextColor="#EF4444" FontSize="13" 
@@ -49,30 +49,30 @@
 
                     <!-- UserName Field (only for register) -->
                     <VerticalStackLayout Spacing="6" IsVisible="{Binding IsRegisterMode}">
-                        <Label Text="Kullanıcı Adı" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" FontSize="14" FontAttributes="Bold"/>
-                        <Border Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeShape="RoundRectangle 8" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}" HeightRequest="46">
+                        <Label Text="Kullanıcı Adı" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" FontSize="14" FontAttributes="Bold"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" StrokeShape="RoundRectangle 8" StrokeThickness="1.5" BackgroundColor="{AppThemeBinding Light={StaticResource LightInputBg}, Dark=#0F172A}" HeightRequest="46">
                             <Entry Text="{Binding UserName}" Placeholder="kullanici_adi" 
-                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
                                    Margin="10,0" Keyboard="Text" VerticalOptions="Center"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <!-- Email Field -->
                     <VerticalStackLayout Spacing="6">
-                        <Label Text="E-posta" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" FontSize="14" FontAttributes="Bold"/>
-                        <Border Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeShape="RoundRectangle 8" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}" HeightRequest="46">
+                        <Label Text="E-posta" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" FontSize="14" FontAttributes="Bold"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" StrokeShape="RoundRectangle 8" StrokeThickness="1.5" BackgroundColor="{AppThemeBinding Light={StaticResource LightInputBg}, Dark=#0F172A}" HeightRequest="46">
                             <Entry Text="{Binding Email}" Placeholder="eposta@adresiniz.com" 
-                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
                                    Margin="10,0" Keyboard="Email" VerticalOptions="Center"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <!-- Password Field -->
                     <VerticalStackLayout Spacing="6">
-                        <Label Text="Şifre" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" FontSize="14" FontAttributes="Bold"/>
-                        <Border Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeShape="RoundRectangle 8" StrokeThickness="1" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}" HeightRequest="46">
+                        <Label Text="Şifre" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" FontSize="14" FontAttributes="Bold"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" StrokeShape="RoundRectangle 8" StrokeThickness="1.5" BackgroundColor="{AppThemeBinding Light={StaticResource LightInputBg}, Dark=#0F172A}" HeightRequest="46">
                             <Entry Text="{Binding Password}" Placeholder="••••••" IsPassword="True"
-                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
                                    Margin="10,0" VerticalOptions="Center"/>
                         </Border>
                     </VerticalStackLayout>

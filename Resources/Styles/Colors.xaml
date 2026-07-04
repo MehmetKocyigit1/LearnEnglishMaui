@@ -88,9 +88,17 @@
         <GradientStop Color="#161D30" Offset="1.0" />
     </LinearGradientBrush>
 
+    <!-- High-Contrast Light Theme UI Colors -->
+    <Color x:Key="LightPageBg">#FFFFFF</Color>
+    <Color x:Key="LightCardBg">#F8FAFC</Color>
+    <Color x:Key="LightInputBg">#F1F5F9</Color>
+    <Color x:Key="LightBorder">#94A3B8</Color>
+    <Color x:Key="LightText">#0F172A</Color>
+    <Color x:Key="LightTextSecondary">#475569</Color>
+
     <LinearGradientBrush x:Key="LightCardGradient" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Color="#FFFFFF" Offset="0.0" />
-        <GradientStop Color="#F1F5F9" Offset="1.0" />
+        <GradientStop Color="#F8FAFC" Offset="1.0" />
     </LinearGradientBrush>
 
     <!-- Professional Accent Colors -->

@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:IngilizceProjeMAUI.Converters"
              x:Class="IngilizceProjeMAUI.Views.AiChatPage"
              Title="Başöğretmen Chat"
-             Background="{AppThemeBinding Light=White, Dark={StaticResource DarkBgGradient}}">
+             Background="{AppThemeBinding Light={StaticResource LightPageBg}, Dark={StaticResource DarkBgGradient}}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -19,9 +19,9 @@
     <Grid RowDefinitions="Auto, *, Auto" Padding="0" RowSpacing="0">
 
         <!-- HEADER AREA (Modern Header with Status Indicator) -->
-        <Border Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#CC1E293B}" Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" StrokeThickness="1" StrokeShape="RoundRectangle 0" Padding="16,12">
+        <Border Grid.Row="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightCardBg}, Dark=#CC1E293B}" Stroke="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" StrokeThickness="1.5" StrokeShape="RoundRectangle 0" Padding="16,12">
             <Border.Shadow>
-                <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="{AppThemeBinding Light=0.08, Dark=0.3}"/>
+                <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="{AppThemeBinding Light=0.06, Dark=0.3}"/>
             </Border.Shadow>
             <Grid ColumnDefinitions="Auto, *, Auto">
                 
@@ -30,11 +30,11 @@
                 </Border>
 
                 <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0" VerticalOptions="Center">
-                    <Label Text="AI Başöğretmen" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}"/>
+                    <Label Text="AI Başöğretmen" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}"/>
                     <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                         <Ellipse WidthRequest="8" HeightRequest="8" Fill="#10B981" VerticalOptions="Center"/>
                         <Label Text="{Binding IsAiTyping, Converter={StaticResource BoolToValueConverter}, ConverterParameter='Yazıyor...|Çevrimiçi'}" 
-                               FontSize="12" TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}" VerticalOptions="Center"/>
+                               FontSize="12" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#94A3B8}" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
 
@@ -60,8 +60,8 @@
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <!-- Defaults for AI Message -->
-                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#EEF2F6, Dark=#1E293B}"/>
-                                    <Setter Property="Stroke" Value="{AppThemeBinding Light=#CBD5E1, Dark=#312E81}"/>
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightCardBg}, Dark=#1E293B}"/>
+                                    <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource LightBorder}, Dark=#312E81}"/>
                                     <Setter Property="StrokeShape" Value="RoundRectangle 16,16,16,2"/>
                                     <Setter Property="HorizontalOptions" Value="Start"/>
                                     <Style.Triggers>
@@ -112,7 +112,7 @@
         </CollectionView>
 
         <!-- TYPING INDICATOR & BOTTOM INPUT AREA -->
-        <VerticalStackLayout Grid.Row="2" BackgroundColor="{AppThemeBinding Light=White, Dark=#CC1E293B}" Padding="16,10" Spacing="8">
+        <VerticalStackLayout Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource LightCardBg}, Dark=#CC1E293B}" Padding="16,10" Spacing="8">
             <VerticalStackLayout.GestureRecognizers>
                 <!-- Empty for layout isolation -->
             </VerticalStackLayout.GestureRecognizers>
@@ -120,16 +120,16 @@
             <!-- AI Typing Indicator -->
             <HorizontalStackLayout Spacing="8" IsVisible="{Binding IsAiTyping}" Padding="4,0,0,0">
                 <ActivityIndicator IsRunning="{Binding IsAiTyping}" Color="#6366F1" WidthRequest="16" HeightRequest="16"/>
-                <Label Text="Başöğretmen düşünüyor..." FontSize="13" TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}" FontAttributes="Italic"/>
+                <Label Text="Başöğretmen düşünüyor..." FontSize="13" TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark=#94A3B8}" FontAttributes="Italic"/>
             </HorizontalStackLayout>
 
             <!-- Input Entry and Send Button -->
             <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
                 <!-- Text input entry -->
-                <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}" StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Stroke="{AppThemeBinding Light=#CBD5E1, Dark={StaticResource BorderColor}}" Padding="12,2">
+                <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightInputBg}, Dark=#0F172A}" StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Stroke="{AppThemeBinding Light={StaticResource LightBorder}, Dark={StaticResource BorderColor}}" Padding="12,2">
                     <Entry Placeholder="Başöğretmen'e mesaj yazın..." 
                            Text="{Binding UserMessageText}" 
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                           TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark=White}" 
                            PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
                            FontSize="14"
                            HeightRequest="40"
